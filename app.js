@@ -1,75 +1,65 @@
-let boxes = document.querySelectorAll(".box");
-let resetBtn = document.querySelector("#reset-btn");
-let newGameBtn = document.querySelector("#New-btn");
-let msgContainer = document.querySelector(".msg-container");
-let msg = document.querySelector("#msg");
-
-
-let turnO = true;
-
-const winPatterns = [
-    [0, 1, 2],
-    [0, 3, 6],
-    [0, 4, 8],
-    [1, 4, 7],
-    [2, 4, 6],
-    [2, 5, 8],
-    [3, 4, 5],
-    [6, 7, 8],
-];
-const resetGame = ()=> {
-    turnO = true;
-    enableboxes();
-    msgContainer.classList.add("hide");
+function allowDrop(event) {
+    event.preventDefault();
 }
 
-boxes.forEach((box) => {
-    box.addEventListener("click", () => {
-        
-        if (box.innerText === "") {
-            box.innerText = turnO ? "O" : "X";
-            box.disabled = true;
-            turnO = !turnO;
 
-            checkWinner();
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    if (event.target.className === "dropbox" && event.target.children.length === 0) {
+        event.target.appendChild(document.getElementById(data));
+        checkWinner();
+    }
+}
+
+function resetGame() {
+    // Clear the game board
+    const dropboxes = document.querySelectorAll(".dropbox");
+    dropboxes.forEach(dropbox => {
+        if (dropbox.firstChild) {
+            const draggable = dropbox.firstChild;
+            draggable.removeAttribute("style"); // Remove any inline styles
+            const originalParent = document.querySelector(`.drag .dragbox:not(:has(div))`);
+            originalParent.appendChild(draggable);
         }
     });
-});
 
-const disableboxes = () => {
-    for(let box of boxes){
-        box.disabled = true;
-    }
-}
-const enableboxes = () => {
-    for(let box of boxes){
-        box.disabled = false;
-        box.innerText = "";
-    }
+    // Hide the winner announcement
+    document.getElementById("winner-announcement").classList.add("hide");
+
+    // Enable the board for dropping elements
+    enableBoard();
 }
 
-
-const showWinner  =(winner) => {
-    msg.innerText =`Congratulations, Winner is ${winner}`;
-    msg-msgContainer.classList.remove("hide");
-    disableboxes();
-
+function newGame() {
+    resetGame();
+   
 }
-const checkWinner = () => {
-    for (let pattern of winPatterns) {
-        let pos1Val = boxes[pattern[0]].innerText;
-        let pos2Val = boxes[pattern[1]].innerText;
-        let pos3Val = boxes[pattern[2]].innerText;
 
-        if (pos1Val !== "" && pos2Val !== "" && pos3Val !== "") {
-            if (pos1Val === pos2Val && pos2Val === pos3Val) {
-               
-                showWinner(pos1Val);
-                
-            }
-        }
-    }
+
+function disableBoard() {
+    const dropboxes = document.querySelectorAll(".dropbox");
+    dropboxes.forEach((box) => {
+        box.removeEventListener("click", handleClick);
+        box.style.pointerEvents = "none";
+    });
 }
-newGameBtn.addEventListener("click",resetGame);
-resetBtn.addEventListener("click",resetGame);
+
+function enableBoard() {
+    const dropboxes = document.querySelectorAll(".dropbox");
+    dropboxes.forEach(dropbox => {
+        dropbox.setAttribute("ondrop", "drop(event)");
+        dropbox.setAttribute("ondragover", "allowDrop(event)");
+    });
+}
+function announceWinner(winner) {
+    alert(`Congratulations, ${winner} wins!`);
+    // or display the winner on the page
+    document.getElementById("winner").textContent = `Congratulations, ${winner} wins!`;
+}
 
