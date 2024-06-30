@@ -5,22 +5,24 @@
 }
 
 body {
-    background: linear-gradient(45deg, #0085ff, #ff1458);
+    background: linear-gradient(45deg, hsla(297, 87%, 46%, 0.458),#ff1458);
+    
     font-family: Arial, sans-serif;
     min-height: 100vh;
+    
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-.board {
+}
+.board{
     position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     margin: 0 50px;
-}
 
-.board .dropbox {
+}
+.board .dropbox{
     position: relative;
     width: 140px;
     height: 140px;
@@ -31,25 +33,21 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .board .dropbox:nth-child(3),
 .board .dropbox:nth-child(6),
-.board .dropbox:nth-child(9) {
+.board .dropbox:nth-child(9)
+{
     border-right: none;
 }
 
 .board .dropbox:nth-child(7),
 .board .dropbox:nth-child(8),
-.board .dropbox:nth-child(9) {
+.board .dropbox:nth-child(9)
+{
     border-bottom: none;
 }
 
-.board .dropbox div {
-    pointer-events: none;
-    scale: 1.5;
-}
-
-.drag {
+.drag{
     position: relative;
     display: flex;
     justify-content: center;
@@ -60,14 +58,20 @@ body {
     gap: 10px;
     margin: 0 40px;
     cursor: grab;
+
 }
 
-.drag .dragbox {
+.drag .dragbox{
     padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255,255,255,0.1);
 }
 
-.cross {
+.board .dropbox div {
+    pointer-events: none;
+    transform: scale(1.5);
+}
+
+ .cross{
     position: relative;
     width: 50px;
     height: 50px;
@@ -75,8 +79,7 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-.cross::before {
+.cross::before{
     content: "";
     position: absolute;
     width: 5px;
@@ -85,7 +88,7 @@ body {
     transform: rotate(45deg);
 }
 
-.cross::after {
+ .cross::after{
     content: "";
     position: absolute;
     width: 100%;
@@ -94,46 +97,30 @@ body {
     transform: rotate(45deg);
 }
 
-.circle {
+ .circle{
     position: relative;
     width: 50px;
     height: 50px;
-    border: 5px solid #fff;
+    border: 5px solid  #fff;
     border-radius: 50%;
 }
+.reset-btn, .new-game-btn {
+    padding: 10px 25px;
+    border: none;
+    outline: none;
+    background: #16161616;
+    color: #fff;
+    font-size: 1.25em;
+    cursor: pointer;
+    margin: 20px; /* Add margin to separate buttons */
+}
 
-.buttons {
+.button-container {
     position: absolute;
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 20px;
+    gap: 10px; /* Add gap between buttons */
 }
 
-.reset-btn, .new-btn {
-    padding: 10px 25px;
-    border: none;
-    outline: none;
-    background: #161616;
-    color: #fff;
-    font-size: 1.25rem;
-    cursor: pointer;
-}
-
-#winner-announcement {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    color: #161616;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.hide {
-    display: none;
-}
