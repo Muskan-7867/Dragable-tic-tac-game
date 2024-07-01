@@ -13,6 +13,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 
 }
 .board{
@@ -122,5 +123,13 @@ body {
     transform: translateX(-50%);
     display: flex;
     gap: 10px; /* Add gap between buttons */
+}
+
+#winner-announcement {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    
+    color: white; 
 }
 

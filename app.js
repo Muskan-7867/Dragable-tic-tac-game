@@ -5,17 +5,20 @@ function allowDrop(event) {
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
+
 function drop(event) {
     event.preventDefault();
     var data = event.dataTransfer.getData("text");
     var draggableElement = document.getElementById(data);
     if (event.target.classList.contains("dropbox") && event.target.childElementCount === 0) {
         event.target.appendChild(draggableElement);
-        if (checkForWinner()) {
+        var winner = checkForWinner();
+        if (winner) {
             announceWinner();
         }
     }
 }
+
 
 function checkForWinner() {
     var dropboxes = document.querySelectorAll('.dropbox');
@@ -32,7 +35,7 @@ function checkForWinner() {
             dropboxes[a].firstElementChild.className === dropboxes[b].firstElementChild.className &&
             dropboxes[b].firstElementChild.className === dropboxes[c].firstElementChild.className
         ) {
-            return dropboxes[a].firstElementChild.className; // Return the class of the winner ('cross' or 'circle')
+            return dropboxes[a].firstElementChild.className; 
         }
     }
     return null;
@@ -42,7 +45,7 @@ function announceWinner() {
     var winner = checkForWinner();
     if (winner) {
         var winnerSymbol = winner === 'cross' ? 'X' : 'O';
-        alert(`Congratulations! ${winnerSymbol} wins!`);
+        document.getElementById('winner-announcement').textContent = `Congratulations! ${winnerSymbol} wins!`;
     }
 }
 
@@ -70,6 +73,8 @@ function resetGame() {
             dragContainers[index + crosses.length].appendChild(circle);
         }
     });
+
+   
 }
 
 function newGame() {
@@ -81,16 +86,4 @@ var buttonContainer = document.createElement('div');
 buttonContainer.classList.add('button-container');
 document.body.appendChild(buttonContainer);
 
-// Add a reset button
-var resetButton = document.createElement('button');
-resetButton.textContent = 'Reset Game';
-resetButton.classList.add('reset-btn');
-resetButton.onclick = resetGame;
-buttonContainer.appendChild(resetButton);
 
-// Add a new game button
-var newGameButton = document.createElement('button');
-newGameButton.textContent = 'New Game';
-newGameButton.classList.add('new-game-btn');
-newGameButton.onclick = newGame;
-buttonContainer.appendChild(newGameButton);
