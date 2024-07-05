@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -84,6 +84,11 @@ body {
   grid-template-columns: repeat(3, 1fr);
   margin: 0 50px;
   animation: bounce 2s infinite;
+  transition: transform 0.3s ease;
+}
+
+.board:hover {
+  transform: scale(1.05);
 }
 
 .board .dropbox {
@@ -96,6 +101,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.board .dropbox:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .board .dropbox:nth-child(3),
@@ -125,14 +135,21 @@ body {
 
 .drag .dragbox {
   padding: 15px;
-  background: rgb(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   animation: shake 0.5s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.drag .dragbox:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .board .dropbox div {
   pointer-events: none;
   transform: scale(1.5);
   animation: fadeIn 1s ease-in-out;
+  transition: transform 0.3s ease;
 }
 
 .cross {
@@ -142,6 +159,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .cross::before {
@@ -168,6 +186,7 @@ body {
   height: 50px;
   border: 5px solid #fff;
   border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 
 #reset-game-btn,
@@ -181,6 +200,13 @@ body {
   cursor: pointer;
   animation: pulse 2s infinite;
   margin: 10px; /* Add margin to separate buttons */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#reset-game-btn:hover,
+#new-game-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
 }
 
 .button-container {
@@ -198,6 +224,11 @@ body {
   font-size: 2rem;
   margin-bottom: 40%;
   animation: fadeIn 2s ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+#winner-text.congrats {
+  animation: congrats 2s ease-in-out infinite;
 }
 
 @keyframes congrats {
