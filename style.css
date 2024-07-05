@@ -327,12 +327,17 @@ body {
   }
 
   .drag {
-    height: 180px;
+    height: auto;
     width: 60px;
+    flex-direction: row; /* Change layout to row */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: space-around; /* Adjust spacing */
   }
 
   .drag .dragbox {
     padding: 4px;
+    width: 50px; /* Adjust width to fit in row layout */
+    height: 50px; /* Adjust height to fit in row layout */
   }
 
   #winner-text {
