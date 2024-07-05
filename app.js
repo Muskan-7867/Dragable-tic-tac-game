@@ -1,5 +1,8 @@
 let currentPlayer = 'X'; // Track current player (X or O)
 
+// Store initial positions of draggable elements
+const initialPositions = [];
+
 // Function to allow drop
 function allowDrop(event) {
   event.preventDefault();
@@ -100,36 +103,29 @@ function startNewGame() {
   // Reset the current player
   currentPlayer = 'X';
 
-  // Enable drag for all components
-  for (var j = 0; j < dragboxes.length; j++) {
-    var component = dragboxes[j].firstElementChild;
-    component.setAttribute('draggable', true);
+  // Reset draggable elements to their initial positions
+  for (var j = 0; j < initialPositions.length; j++) {
+    var { element, parent } = initialPositions[j];
+    parent.appendChild(element);
+    element.setAttribute('draggable', true);
   }
 }
 
-// Function to reset the game
+// Function to reset the game (reload the page)
 function resetGame() {
-  var dropboxes = document.getElementsByClassName("dropbox");
-  var dragboxes = document.getElementsByClassName("dragbox");
-
-  // Clear the game board
-  for (var i = 0; i < dropboxes.length; i++) {
-    dropboxes[i].innerHTML = "";
-  }
-
-  // Reset the winner text
-  var winnerText = document.getElementById("winner-text");
-  winnerText.textContent = "";
-
-  // Reset the current player
-  currentPlayer = 'X';
-
-  // Disable drag for all components
-  for (var j = 0; j < dragboxes.length; j++) {
-    var component = dragboxes[j].firstElementChild;
-    component.setAttribute('draggable', false);
-  }
+  location.reload();
 }
+
+// Store initial positions of draggable elements
+window.onload = function() {
+  var dragboxes = document.getElementsByClassName("dragbox");
+  for (var i = 0; i < dragboxes.length; i++) {
+    initialPositions.push({
+      element: dragboxes[i].firstElementChild,
+      parent: dragboxes[i]
+    });
+  }
+};
 
 // Event listener for the new game button
 var newGameBtn = document.getElementById("new-game-btn");
